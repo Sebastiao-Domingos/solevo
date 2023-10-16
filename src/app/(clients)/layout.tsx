@@ -1,11 +1,15 @@
-import { HTMLAttributes } from "react";
+import React from "react";
 
 
+interface LayoutProps{
+    children : React.ReactNode;
+}
 
-interface LayoutProps extends HTMLAttributes<HTMLDivElement>{}
-export default function Layout({children}:LayoutProps){
+function Layout({children}:LayoutProps){
     return <div>
         {children}
         <span>Footer</span>
     </div>
 }
+
+export default Layout;
