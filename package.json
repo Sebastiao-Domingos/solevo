@@ -9,9 +9,12 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@radix-ui/react-alert-dialog": "^1.0.5",
+    "@radix-ui/react-dialog": "^1.0.5",
     "next": "13.5.4",
     "react": "^18",
     "react-dom": "^18",
+    "remixicon": "^3.5.0",
     "tailwind-merge": "^1.14.0"
   },
   "devDependencies": {

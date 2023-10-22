@@ -1,4 +1,5 @@
 import Link from "next/link";
+import MobileMenu from "./MobileMenu";
 
 
 function  Header(){
@@ -6,6 +7,7 @@ function  Header(){
         <Link href={"/home"}>
             <h3 className="italic text-white">My logo</h3>
         </Link>
+        <MobileMenu />
     </div>
 }
 

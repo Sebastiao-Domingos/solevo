@@ -16,6 +16,12 @@ export default function RootLayout({
 }) {
   return (
     <html lang="pt-pt">
+      <head>
+        <link
+            rel="stylesheet"
+            href="https://cdn.jsdelivr.net/npm/remixicon@2.2.0/fonts/remixicon.css"
+          />
+        </head>
       <body>{children}</body>
     </html>
   )
