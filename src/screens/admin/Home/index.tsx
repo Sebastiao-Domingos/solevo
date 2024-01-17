@@ -1,8 +1,10 @@
 
-
 function Home() {
     return ( 
-        <div>Home</div>
+        <div>Home
+            <span className="material-symbols-outlined">search</span>
+            <span className="material-symbols-outlined">home</span>
+        </div>
      );
 }
 

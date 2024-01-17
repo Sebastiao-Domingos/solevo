@@ -5,8 +5,8 @@ import type { Metadata } from 'next'
 // const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
-  title: 'Solevo',
-  description: 'Loja Solevo',
+  title: 'Transporadora',
+  description: 'Empresa transportadora',
 }
 
 export default function RootLayout({
@@ -21,6 +21,7 @@ export default function RootLayout({
             rel="stylesheet"
             href="https://cdn.jsdelivr.net/npm/remixicon@2.2.0/fonts/remixicon.css"
           />
+          <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
         </head>
       <body>{children}</body>
     </html>

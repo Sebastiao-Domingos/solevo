@@ -17,7 +17,7 @@ function Screen() {
             <div className="w-[65%] h-[400px] flex justify-center items-center">
             <div className="text-center space-y-6">
                <h1 className="text-4xl uppercase text-amber-800 font-bold">
-                Sistema de gestão de Fazendas
+                Sistema de getão e controlo de transpotadora
                </h1>
                <p className="">
                 Lorem, ipsum dolor sit amet consectetur adipisicing elit. At temporibus sit possimus expedita aliquam a eligendi, odio ullam nesciunt beatae sapiente accusantium voluptatibus placeat ipsum officiis, corporis eveniet, porro cumque!

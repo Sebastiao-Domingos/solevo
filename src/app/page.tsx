@@ -1,7 +1,7 @@
 import { redirect } from "next/navigation";
 
 function Page(){
-    redirect('/screen')
+    redirect('/initial')
 }
 
 export default Page;

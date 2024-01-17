@@ -1,82 +1,140 @@
+"use client"
 import Link from "next/link";
-import React from "react";
-
+import React, { useState } from "react";
+import * as Accordion from '@radix-ui/react-accordion';
+import { QueryClient, QueryClientProvider } from "react-query";
 
 const links = [
     {
         group : "Markiting",
-        menu : {
-            title : "Home",
-            link : "#",
-            icon : "",
-        },
-        submenus : [
+        menus : [
             {
-                title : "Fazendas",
-                link : "#",
-                icon : "",
+                title : "Home",
+                link : "/dashboard",
+                icon : "ri-home-2-line",
+                subMenus : [],
             },
             {
-                title : "Produtos",
-                link : "#",
-                icon : "",
+                title : "Caminões",
+                link : "/dashboard/caminhoes",
+                icon : "ri-car-line",
+                subMenus : [],
             },
             {
-                title : "Proprietarios",
-                link : "#",
+                title : "Pneus",
+                link : "/dashboard/pneus",
                 icon : "",
+                subMenus : [],
             },
             {
-                title : "Markiting",
-                link : "#",
+                title : "Motoristas",
+                link : "/dashboard/motoristas",
+                icon : "ri-root-line",
+                subMenus : [
+                    {
+                        title : "Localização",
+                        link : "#",
+                    }
+                ],
+            },
+            {
+                title : "Viagens",
+                link : "/dashboard/viagens",
                 icon : "",
+                subMenus : [],
+            },
+            {
+                title : "Definições",
+                link : "#",
+                icon : "ri-setting-line",
+                subMenus : [{
+                    title : "Administradores",
+                    link : "/dashboard/administradores"
+                }],
             },
         ]
     }
 ]
 
 
+
+const client = new QueryClient();
+
 export default function Layout({children} : {children : React.ReactNode}){
     return (
-        <div className="w-full">
-            <div className="fixed top-0 left-0 w-[300px] h-full bg-white/60 p-4 shadow">
-                <div className="flex justify-between">
-                    <h2 className="text-amber-600 font-bold text-2xl">Fazendas</h2>
-                    <button className="p-2 rounded shadow text-xl"><i className="ri-arrow-left-s-line"></i></button>
-                </div>
-                <Menu></Menu>
-            </div>
-
-            <div className="ml-[300px]">
-                <div className="w-full p-6 bg-white/60 shadow flex items-center justify-between">
-                    <p className="italic text-green-600">Dashboard</p>
-                    
-                    <div className="flex gap-8">
-                        <button>Notificação</button>
-                        <button className="flex items-center gap-2 p-2 rounded-full bg-amber-600 text-white"><i className="ri-logout-circle-line"></i> Logout</button>
+        <QueryClientProvider client={client}>
+            <div className="w-full">
+                <div className="fixed top-0 left-0 w-[300px] h-full bg-white/60 p-4 shadow">
+                    <div className="flex justify-between">
+                        <h2 className="text-amber-600 font-bold text-2xl">Transportadora</h2>
+                        <button className="p-2 rounded shadow text-xl"><i className="ri-arrow-left-s-line"></i></button>
+                    </div>
+                    <Menu></Menu>
+                    <div className="absolute bottom-4 left-4">
+                        <p className="space-x-3 border-b pb-2 text-amber-600"> 
+                            <i className="ri-user-line"></i>
+                            <span>sebastiao@gmail.com</span>
+                        </p>
+                        <button className="flex items-center gap-2 p-2 pt-2"><i className="ri-logout-circle-line"></i> Sair da conta</button>
                     </div>
                 </div>
-                <div className="p-6">
-                    {children}
+
+                <div className="ml-[300px]">
+                    <div className="w-full p-6 bg-white/60 shadow flex items-center justify-between">
+                        <p className="italic text-green-600">Dashboard</p>
+                        
+                        <div className="flex gap-8">
+                            <button>Notificação</button>
+                            <button className="flex items-center gap-2 p-2 rounded-full bg-amber-600 text-white"><i className="ri-logout-circle-line"></i> Logout</button>
+                        </div>
+                    </div>
+                    <div className="p-6">
+                        {children}
+                    </div>
                 </div>
             </div>
-        </div>
+        </QueryClientProvider>
     )
 }
 
 
-
 function Menu(){
+    const [active , setActive] = useState(false);
     return (
         <nav>
             { links.map( ( link , index ) => (
-                <div className="w-full">
+            <div key={index} className="w-full">
                 <h3 className="mb-4 ">{link.group}</h3>    
-                <ul className="w-full flex flex-col gap-3 text-xl">
-                    <li className="w-full flex">
-                        <Link className="w-full p-3 hover:bg-amber-600/40 rounded" href={link.menu.link}>{link.menu.title}</Link>
-                    </li>
-                    <li className="w-full flex">
+                <div className="w-full flex flex-col gap-1 text-xl">
+                    <Accordion.Root 
+                       type="single"
+                       defaultValue="item-1"
+                       collapsible
+                       className="w-ful flex flex-col gap-2"
+                    >
+                    {link.menus.map( (menu , index) => (
+                        <Accordion.Item value={`item-${index}`}
+                            key={menu.title} className="w-full flex flex-col"
+                        >
+                            <Accordion.Header className="relative w-full flex justify-between items-center py-2 px-3 hover:bg-amber-600/30 rounded">
+                                <Link className="" href={menu.link}><i className={`${menu.icon}`}></i> {menu.title}</Link>
+                                {menu.subMenus.length!==0 &&(
+                                    <Accordion.Trigger onClick={ () => setActive(previus => !previus)}><i className={`ri-arrow-down-s-fill absolute ${ active && "rotate-180"} bottom-4 right-4`}></i></Accordion.Trigger>
+                                )}
+                            </Accordion.Header>
+                            {menu.subMenus.length !== 0 && (
+                                <Accordion.Content className="flex flex-col gap-1 pl-4">
+                                    {menu.subMenus.map(submenu => (
+                                        <Link href={submenu.link} key={submenu.title}
+                                            className="py-2 px-3 hover:bg-amber-600/30 rounded"
+                                        >{submenu.title}</Link>
+                                    ))}
+                                </Accordion.Content>
+                            )}
+                            </Accordion.Item>
+                    ))}
+                    </Accordion.Root>
+                    {/* <li className="w-full flex">
                         <Link className="w-full p-3 hover:bg-amber-600/40 rounded" href={"#"}>Fazendas</Link>
                     </li>
                     <li className="w-full flex">
@@ -84,8 +142,8 @@ function Menu(){
                     </li>
                     <li className="w-full flex">
                         <Link className="w-full p-3 hover:bg-amber-600/40 rounded" href={"#"}>Proprientarios</Link>
-                    </li>
-                </ul>
+                    </li> */}
+                </div>
                 </div>
             ))}
         </nav>

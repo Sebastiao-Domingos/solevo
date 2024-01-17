@@ -11,7 +11,7 @@ function Page(){
             <div className="flex justify-between w-[80%]">
                 <div className="w-[50%] flex">
                     <div className="m-auto space-y-5">
-                        <h2 className="text-4xl font-bold text-amber-600">Sistema de gestão de Fazendas</h2>
+                        <h2 className="text-4xl font-bold text-amber-600">Sistema de gestão e controlo de transportadora</h2>
                         <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Adipisci odio facere quia itaque eligendi quis! Dolores illum veniam dolore tenetur officia, dolorem dolorum non laboriosam nobis consequatur? Necessitatibus, quo hic.</p>
                     </div>
                 </div>
