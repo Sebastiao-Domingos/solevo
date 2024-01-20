@@ -1,19 +1,40 @@
 "use client"
 
 import Header from "@/components/Headers/Header";
-import { useGetCaminhoes } from "@/hooks/useCaminhao";
-import { useEffect } from "react";
+import { useActionCaminhao, useGetCaminhoes } from "@/hooks/useCaminhao";
+import { useEffect, useState } from "react";
 import { Edit } from "./Edit";
 import { Register } from "./Register";
 import Table, { TBody, THead } from "@/components/Table/Table";
+import { StatesType } from "@/components/State/StateComponent";
+import { DeleteModal } from "@/components/Modals/DeleteModal";
 
 function Caminhoes() {
 
     const {data , result} = useGetCaminhoes();
-    useEffect(()=>{
-        console.log(data);
+
+    const {mutationDelete} = useActionCaminhao()
+    const [states , setStates ] =useState<StatesType>({
+        isLoading : false, isSuccess : false , isError : false
+    })
+    
+    const handleData = ( id : number)=>{
         
-    },[data])
+        setStates({...states , isLoading:true});
+        mutationDelete.mutate( id, {
+            onSuccess(){
+                setStates({...states , isLoading : false , isSuccess : true})
+            },
+            onError(){
+                setStates({...states , isError : true , isLoading : false})
+            },
+            onSettled(){
+                setTimeout(() => {
+                    setStates({...states , isError : false , isLoading : false , isSuccess : false})
+                }, 4000);
+            }
+        })
+    }
     return ( <div>
         
         <Header 
@@ -42,7 +63,10 @@ function Caminhoes() {
                             <td className="py-4">{caminhao.ano_fabricacao}</td>
                             <td className="space-x-8">
                                 <Edit caminhao={caminhao} />
-                                <button><i className="ri-delete-bin-line text-red-500"></i></button>
+                                <DeleteModal 
+                                    handleDelete={() => handleData(caminhao.id!)}
+                                    status={states}                                    
+                                />
                             </td>
                         </tr>
                     ))}

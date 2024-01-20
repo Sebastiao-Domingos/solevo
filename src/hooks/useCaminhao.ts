@@ -7,7 +7,7 @@ const controller = new CaminhaoController();
 function useGetCaminhoes(){
 
     const {data , ...result} = useQuery({
-        queryKey : ["caminhao"],
+        queryKey : ["caminhoes"],
         queryFn : controller.listar
     })
 
@@ -17,26 +17,55 @@ function useGetCaminhoes(){
 
 }
 
+// function useActionCaminhao(){
+//     const query = useQueryClient();
+    
+//     const mutationUpdate = useMutation({
+//         mutationFn: controller.atualizar,
+//         mutationKey :["caminhao"],
+//         onSuccess(){
+//             query.invalidateQueries({queryKey:["caminhao"]})
+//         }
+//     })
+//     const mutationCreate = useMutation({
+//         mutationFn: controller.adicionar,
+//         mutationKey :["caminhao"],
+//         onSuccess(){
+//             query.invalidateQueries({queryKey:["caminhao"]})
+//         }
+//     })
+
+
+//     return {mutationCreate , mutationUpdate}
+// }
+
 function useActionCaminhao(){
     const query = useQueryClient();
     
     const mutationUpdate = useMutation({
         mutationFn: controller.atualizar,
-        mutationKey :["caminhao"],
+        mutationKey :["caminhoes"],
         onSuccess(){
-            query.invalidateQueries({queryKey:["caminhao"]})
+            query.invalidateQueries({queryKey:["caminhoes"]})
         }
     })
     const mutationCreate = useMutation({
         mutationFn: controller.adicionar,
-        mutationKey :["caminhao"],
+        mutationKey :["caminhoes"],
         onSuccess(){
-            query.invalidateQueries({queryKey:["caminhao"]})
+            query.invalidateQueries({queryKey:["caminhoes"]})
+        }
+    })
+    const mutationDelete = useMutation({
+        mutationFn: controller.eliminar,
+        mutationKey :["caminhoes"],
+        onSuccess(){
+            query.invalidateQueries({queryKey:["caminhoes"]})
         }
     })
 
 
-    return {mutationCreate , mutationUpdate}
+    return {mutationCreate , mutationUpdate , mutationDelete}
 }
 
 

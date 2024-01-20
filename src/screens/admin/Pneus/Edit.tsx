@@ -1,29 +1,32 @@
+"use client"
 import { EditModal } from "@/components/Modals/EditModal";
 import StateComponent, { StatesType } from "@/components/State/StateComponent";
-import { useActionCaminhao } from "@/hooks/useCaminhao";
-import { CaminhaoData } from "@/services/caminhao/CaminhaoService";
-import * as AlertDialog from '@radix-ui/react-alert-dialog';
+import { useGetCaminhoes } from "@/hooks/useCaminhao";
+import { useActionPneu } from "@/hooks/usePneu";
+import { PneuData } from "@/services/pneu/PneuService";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
+import * as AlertDialog from '@radix-ui/react-alert-dialog';
 
 
-function Edit( {caminhao} : {caminhao : CaminhaoData}) {  
-    const {register, handleSubmit } = useForm<CaminhaoData>({
+
+function Edit( {pneu} : {pneu : PneuData}) {  
+    const { data : caminhoes , result : resultCaminhoes } = useGetCaminhoes();
+    const {register, handleSubmit } = useForm<PneuData>({
         defaultValues : {
-            ano_fabricacao : caminhao.ano_fabricacao,
-            km_rodado : caminhao.km_rodado,
-            marca : caminhao.marca,
-            nome : caminhao.nome,
-            id : caminhao.id
+            marca : pneu.marca, 
+            durancao:pneu.durancao,
+            caminhao_id : pneu.caminhao_id
         }
     });
-    const {mutationUpdate} = useActionCaminhao()
+    const {mutationUpdate} = useActionPneu()
     const [states , setStates ] =useState<StatesType>({
         isLoading : false, isSuccess : false , isError : false
     })
 
-    const handleData = (data : CaminhaoData)=>{
-        data.id = caminhao.id
+    const handleData = (data : PneuData)=>{
+        data.id = Number(pneu.id);
+
         setStates({...states , isLoading:true});
         mutationUpdate.mutate( data , {
             onSuccess(){
@@ -41,36 +44,34 @@ function Edit( {caminhao} : {caminhao : CaminhaoData}) {
     }
     
     return <EditModal
-        title="Atualizar caminhão"
+        title="Atualizar motorista"
         btnText=""
     >
-         <form action="" className="space-y-3" onSubmit={handleSubmit(handleData)}>
+        <form action="" className="space-y-3" onSubmit={handleSubmit(handleData)}>
+            <div className="flex flex-col gap-1">
+                <label htmlFor="caminhao">Selecionar o caminhão</label>
+                <select  id="caminhao" className="p-2 rounded border border-amber-600/30 focus:border-amber-600/60 outline-none"
+                    {...register("caminhao_id" , {required : true})}
+                    placeholder="Caminhões"
+                    defaultValue={ pneu.caminhao_id}
+                >
+                    {caminhoes?.map( caminhao => (
+                        <option key={caminhao.id} value={caminhao.id}>{caminhao.nome}</option>
+                    ))}
+                </select>
+                </div>
             <div className="flex flex-col gap-1">
                 <label htmlFor="nome">Nome</label>
                 <input type="text" id="nome" placeholder="Nome" 
-                    className="p-2 rounded border border-amber-600/30 focus:border-amber-600/60 outline-none"
-                    {...register("nome" , {required : true})}
-                />
-            </div>
-            <div className="flex flex-col gap-1">
-                <label htmlFor="marca">Marca</label>
-                <input type="text" id="marca" placeholder="Marca" 
                     className="p-2 rounded border border-amber-600/30 focus:border-amber-600/60 outline-none"
                     {...register("marca" , {required : true})}
                 />
             </div>
             <div className="flex flex-col gap-1">
-                <label htmlFor="ano">Ano de Fabricação</label>
-                <input type="text" id="ano"  placeholder="Ano de fabricação"
+                <label htmlFor="email">Duração</label>
+                <input type="text" id="email" placeholder="Duração" 
                     className="p-2 rounded border border-amber-600/30 focus:border-amber-600/60 outline-none"
-                    {...register("ano_fabricacao" , { required : true})}
-                />
-            </div>
-            <div className="flex flex-col gap-1">
-                <label htmlFor="kilometragem">Kilometragem</label>
-                <input type="number" id="kilometragem"  placeholder="Kilometragem"
-                    className="p-2 rounded border border-amber-600/30 focus:border-amber-600/60 outline-none"
-                    {...register("km_rodado" , { required : true})}
+                    {...register("durancao" , {required : true})}
                 />
             </div>
             <div className="pt-4 relative">

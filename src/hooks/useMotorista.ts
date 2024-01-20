@@ -1,14 +1,14 @@
-import { AdminController } from "@/controllers/users/AdminController";
-import axios from "axios";
+import { MotoristaController } from "@/controllers/motorista/MotoristaController";
+import { ViagemController } from "@/controllers/viagem/ViagemController";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 
 
-const controller = new AdminController();
+const controller = new MotoristaController();
 
-function useGetAdmin(){
+function useGetMotoristas(){
 
     const {data , ...result} = useQuery({
-        queryKey : ["administrador"],
+        queryKey : ["motoristas"],
         queryFn : controller.listar
     })
 
@@ -18,34 +18,34 @@ function useGetAdmin(){
 
 }
 
-function useActionAdmin(){
+function useActionMotorista(){
     const query = useQueryClient();
     
     const mutationUpdate = useMutation({
         mutationFn: controller.atualizar,
-        mutationKey :["administrador"],
+        mutationKey :["motoristas"],
         onSuccess(){
-            query.invalidateQueries({queryKey:["administrador"]})
+            query.invalidateQueries({queryKey:["motoristas"]})
         }
     })
     const mutationCreate = useMutation({
         mutationFn: controller.adicionar,
-        mutationKey :["administrador"],
+        mutationKey :["motoristas"],
         onSuccess(){
-            query.invalidateQueries({queryKey:["administrador"]})
+            query.invalidateQueries({queryKey:["motoristas"]})
+        }
+    })
+    const mutationDelete = useMutation({
+        mutationFn: controller.eliminar,
+        mutationKey :["motoristas"],
+        onSuccess(){
+            query.invalidateQueries({queryKey:["motoristas"]})
         }
     })
 
-    const mutationDelete = useMutation({
-        mutationFn: controller.eliminar,
-        mutationKey :["administrador"],
-        onSuccess(){
-            query.invalidateQueries({queryKey:["administrador"]})
-        }
-    })
 
     return {mutationCreate , mutationUpdate , mutationDelete}
 }
 
 
-export {useGetAdmin , useActionAdmin}
+export {useGetMotoristas, useActionMotorista }

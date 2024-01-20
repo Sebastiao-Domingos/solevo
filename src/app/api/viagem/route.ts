@@ -1,15 +1,16 @@
-import AdminService, { AdminData } from "@/services/users/AdminService";
+import PneuService, { PneuData } from "@/services/pneu/PneuService";
+import ViagemService, { ViagemData } from "@/services/viagem/ViagemService";
 import { isAxiosError } from "axios";
 import { NextRequest, NextResponse } from "next/server";
 
-const service = new AdminService();    
+const service = new ViagemService();    
 
 async function POST( request :  NextRequest) {
 
-    const data: AdminData = await request.json();
-
+    const data: ViagemData = await request.json();
+    
     try {
-        const response = await service.crate(data)
+        const response = await service.create(data)
         const body = response.response;
         return NextResponse.json({body})
     } catch (error) {
@@ -28,6 +29,7 @@ async function POST( request :  NextRequest) {
 
 
 async function GET() {
+    
     try {        
         const response = await service.get()
         const body = response.response
@@ -48,7 +50,9 @@ async function GET() {
 
 async function PUT( request :  NextRequest) {
 
-    const data: AdminData = await request.json();
+    const data: ViagemData = await request.json();
+    
+    console.log("api :  ", data);
     
     try {
         const response = await service.update(data)
@@ -93,4 +97,6 @@ async function DELETE( request :  NextRequest) {
         })
     }
 }
-export {GET , POST , DELETE , PUT}
+
+
+export {GET , POST , PUT, DELETE}

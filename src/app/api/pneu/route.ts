@@ -1,15 +1,15 @@
-import AdminService, { AdminData } from "@/services/users/AdminService";
+import PneuService, { PneuData } from "@/services/pneu/PneuService";
 import { isAxiosError } from "axios";
 import { NextRequest, NextResponse } from "next/server";
 
-const service = new AdminService();    
+const service = new PneuService();    
 
 async function POST( request :  NextRequest) {
 
-    const data: AdminData = await request.json();
-
+    const data: PneuData = await request.json();
+    
     try {
-        const response = await service.crate(data)
+        const response = await service.create(data)
         const body = response.response;
         return NextResponse.json({body})
     } catch (error) {
@@ -28,6 +28,7 @@ async function POST( request :  NextRequest) {
 
 
 async function GET() {
+    
     try {        
         const response = await service.get()
         const body = response.response
@@ -48,7 +49,7 @@ async function GET() {
 
 async function PUT( request :  NextRequest) {
 
-    const data: AdminData = await request.json();
+    const data: PneuData = await request.json();
     
     try {
         const response = await service.update(data)

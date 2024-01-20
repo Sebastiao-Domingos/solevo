@@ -10,26 +10,32 @@ function Register() {
     const {register, handleSubmit } = useForm<AdminData>();
     const {mutationCreate} = useActionAdmin()
     const [senha , setSenha ] = useState("");
+    const [senhaDiferente , setSenhaDiferente ] = useState(false);
     const [states , setStates ] =useState<StatesType>({
         isLoading : false, isSuccess : false , isError : false
     })
 
     const handleData = (data : AdminData)=>{
         
-        setStates({...states , isLoading:true});
-        mutationCreate.mutate( data , {
-            onSuccess(){
-                setStates({...states , isLoading : false , isSuccess : true})
-            },
-            onError(){
-                setStates({...states , isError : true , isLoading : false})
-            },
-            onSettled(){
-                setTimeout(() => {
-                    setStates({...states , isError : false , isLoading : false , isSuccess : false})
-                }, 4000);
-            }
-        })
+        if(data.senha === senha){
+            setSenhaDiferente(false);
+            setStates({...states , isLoading:true});
+            mutationCreate.mutate( data , {
+                onSuccess(){
+                    setStates({...states , isLoading : false , isSuccess : true})
+                },
+                onError(){
+                    setStates({...states , isError : true , isLoading : false})
+                },
+                onSettled(){
+                    setTimeout(() => {
+                        setStates({...states , isError : false , isLoading : false , isSuccess : false})
+                    }, 4000);
+                }
+            })
+        }else {
+            setSenhaDiferente(true);
+        }
     }
     
     return <RegisterModal
@@ -37,6 +43,7 @@ function Register() {
         btnIcon="ri-user-add-line"
         btnText="Adiconar"
     >
+        <p className="text-red-500 italic">{senhaDiferente && "As senhas deve ser iguais!"}</p>
         <form action="" className="space-y-3" onSubmit={handleSubmit(handleData)}>
             <div className="flex flex-col gap-1">
                 <label htmlFor="nome">Nome</label>

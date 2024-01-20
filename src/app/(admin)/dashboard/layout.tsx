@@ -3,6 +3,7 @@ import Link from "next/link";
 import React, { useState } from "react";
 import * as Accordion from '@radix-ui/react-accordion';
 import { QueryClient, QueryClientProvider } from "react-query";
+import { useParams, usePathname } from "next/navigation";
 
 const links = [
     {
@@ -15,7 +16,7 @@ const links = [
                 subMenus : [],
             },
             {
-                title : "Caminões",
+                title : "Caminhões",
                 link : "/dashboard/caminhoes",
                 icon : "ri-car-line",
                 subMenus : [],
@@ -61,6 +62,7 @@ const links = [
 const client = new QueryClient();
 
 export default function Layout({children} : {children : React.ReactNode}){
+    
     return (
         <QueryClientProvider client={client}>
             <div className="w-full">
@@ -99,6 +101,8 @@ export default function Layout({children} : {children : React.ReactNode}){
 
 
 function Menu(){
+    const path = usePathname();
+
     const [active , setActive] = useState(false);
     return (
         <nav>
@@ -116,7 +120,7 @@ function Menu(){
                         <Accordion.Item value={`item-${index}`}
                             key={menu.title} className="w-full flex flex-col"
                         >
-                            <Accordion.Header className="relative w-full flex justify-between items-center py-2 px-3 hover:bg-amber-600/30 rounded">
+                            <Accordion.Header className={`relative w-full flex justify-between items-center py-2 px-3 hover:bg-amber-100 rounded ${path === menu.link && "bg-amber-300"} `}>
                                 <Link className="" href={menu.link}><i className={`${menu.icon}`}></i> {menu.title}</Link>
                                 {menu.subMenus.length!==0 &&(
                                     <Accordion.Trigger onClick={ () => setActive(previus => !previus)}><i className={`ri-arrow-down-s-fill absolute ${ active && "rotate-180"} bottom-4 right-4`}></i></Accordion.Trigger>
@@ -126,7 +130,7 @@ function Menu(){
                                 <Accordion.Content className="flex flex-col gap-1 pl-4">
                                     {menu.subMenus.map(submenu => (
                                         <Link href={submenu.link} key={submenu.title}
-                                            className="py-2 px-3 hover:bg-amber-600/30 rounded"
+                                            className="py-2 px-3 hover:bg-amber-100 rounded"
                                         >{submenu.title}</Link>
                                     ))}
                                 </Accordion.Content>

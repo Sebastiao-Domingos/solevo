@@ -1,29 +1,31 @@
+"use client"
 import { EditModal } from "@/components/Modals/EditModal";
 import StateComponent, { StatesType } from "@/components/State/StateComponent";
-import { useActionCaminhao } from "@/hooks/useCaminhao";
-import { CaminhaoData } from "@/services/caminhao/CaminhaoService";
-import * as AlertDialog from '@radix-ui/react-alert-dialog';
+import { useActionMotorista } from "@/hooks/useMotorista";
+import { MotoristaData } from "@/services/motorista/MotoristaService";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
+import * as AlertDialog from '@radix-ui/react-alert-dialog';
 
 
-function Edit( {caminhao} : {caminhao : CaminhaoData}) {  
-    const {register, handleSubmit } = useForm<CaminhaoData>({
+
+function Edit( {motorista} : {motorista : MotoristaData}) {  
+    
+    const {register, handleSubmit } = useForm<MotoristaData>({
         defaultValues : {
-            ano_fabricacao : caminhao.ano_fabricacao,
-            km_rodado : caminhao.km_rodado,
-            marca : caminhao.marca,
-            nome : caminhao.nome,
-            id : caminhao.id
+            nome : motorista.nome,
+            numero_carta_conducao : motorista.numero_carta_conducao, 
+            telefone : motorista.telefone,
+            id  : motorista.id
         }
     });
-    const {mutationUpdate} = useActionCaminhao()
+    const {mutationUpdate} = useActionMotorista()
     const [states , setStates ] =useState<StatesType>({
         isLoading : false, isSuccess : false , isError : false
     })
-
-    const handleData = (data : CaminhaoData)=>{
-        data.id = caminhao.id
+    
+    const handleData = (data : MotoristaData)=>{
+        data.id = motorista.id;
         setStates({...states , isLoading:true});
         mutationUpdate.mutate( data , {
             onSuccess(){
@@ -41,36 +43,30 @@ function Edit( {caminhao} : {caminhao : CaminhaoData}) {
     }
     
     return <EditModal
-        title="Atualizar caminhão"
+        title="Atualizar motorista"
         btnText=""
     >
-         <form action="" className="space-y-3" onSubmit={handleSubmit(handleData)}>
+        <form action="" className="space-y-3" onSubmit={handleSubmit(handleData)}>
             <div className="flex flex-col gap-1">
+                <input type="number" {...register("id") } className="hidden" />
                 <label htmlFor="nome">Nome</label>
-                <input type="text" id="nome" placeholder="Nome" 
+                <input type="text" id="nome" placeholder="Nome do motorista" 
                     className="p-2 rounded border border-amber-600/30 focus:border-amber-600/60 outline-none"
                     {...register("nome" , {required : true})}
                 />
             </div>
             <div className="flex flex-col gap-1">
-                <label htmlFor="marca">Marca</label>
-                <input type="text" id="marca" placeholder="Marca" 
+                <label htmlFor="email">Numero da carta</label>
+                <input type="text" id="email" placeholder="Carta de condução" 
                     className="p-2 rounded border border-amber-600/30 focus:border-amber-600/60 outline-none"
-                    {...register("marca" , {required : true})}
+                    {...register("numero_carta_conducao" , {required : true})}
                 />
             </div>
             <div className="flex flex-col gap-1">
-                <label htmlFor="ano">Ano de Fabricação</label>
-                <input type="text" id="ano"  placeholder="Ano de fabricação"
+                <label htmlFor="senha">Telefone</label>
+                <input type="text" id="senha"  placeholder="Telefone"
                     className="p-2 rounded border border-amber-600/30 focus:border-amber-600/60 outline-none"
-                    {...register("ano_fabricacao" , { required : true})}
-                />
-            </div>
-            <div className="flex flex-col gap-1">
-                <label htmlFor="kilometragem">Kilometragem</label>
-                <input type="number" id="kilometragem"  placeholder="Kilometragem"
-                    className="p-2 rounded border border-amber-600/30 focus:border-amber-600/60 outline-none"
-                    {...register("km_rodado" , { required : true})}
+                    {...register("telefone" , { required : true})}
                 />
             </div>
             <div className="pt-4 relative">

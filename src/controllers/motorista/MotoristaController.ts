@@ -1,21 +1,18 @@
-import { CaminhaoData } from "@/services/caminhao/CaminhaoService";
-import { AdminData } from "@/services/users/AdminService"
+import { MotoristaData } from "@/services/motorista/MotoristaService";
 import axios from "axios";
 
 
-class CaminhaoController {
-    private static readonly url = "/api/caminhao"
+class MotoristaController {
+    private static readonly url = "/api/motorista"
 
     /**
      * adicionar
      */
-    public async adicionar( caminhao : CaminhaoData) {
+    public async adicionar( motorista : MotoristaData) {
         
-        caminhao.km_rodado = Number(caminhao.km_rodado)
-        
-        const data = await fetch( CaminhaoController.url , {
+        const data = await fetch( MotoristaController.url , {
             method : "POST",
-            body : JSON.stringify(caminhao),
+            body : JSON.stringify(motorista),
         }).then(res => res)
 
         const json = data.json();
@@ -27,14 +24,15 @@ class CaminhaoController {
         return json;
     }
 
-      /**
+    /**
      * atualizar
      */
-      public async atualizar( caminhao : CaminhaoData) {
+    public async atualizar( motorista : MotoristaData) {
+        console.log("controller motorista : ", motorista);
         
-        const data = await fetch(CaminhaoController.url , {
+        const data = await fetch( MotoristaController.url , {
             method : "PUT",
-            body : JSON.stringify(caminhao),
+            body : JSON.stringify(motorista),
         }).then(res => res)
 
         const json = data.json();
@@ -51,7 +49,7 @@ class CaminhaoController {
      */
     public async eliminar(id : number) {
 
-        const data = await fetch( `${CaminhaoController.url}` , {
+        const data = await fetch( `${MotoristaController.url}` , {
             method : "DELETE",
             body : JSON.stringify({id : id })
         }).then(res => res)
@@ -69,13 +67,13 @@ class CaminhaoController {
      */
     public async listar() {
         
-        const response = await fetch(CaminhaoController.url).then(res => res.json())
+        const response = await fetch(MotoristaController.url).then(res => res.json())
         
-        const json:CaminhaoData[] = await response
+        const json:MotoristaData[] = await response
     
         return json
     }
 }
 
 
-export {CaminhaoController}
+export {MotoristaController }

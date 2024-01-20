@@ -1,18 +1,20 @@
-import AdminService, { AdminData } from "@/services/users/AdminService";
+import MotoristaService, { MotoristaData } from "@/services/motorista/MotoristaService";
 import { isAxiosError } from "axios";
 import { NextRequest, NextResponse } from "next/server";
 
-const service = new AdminService();    
+const service = new MotoristaService();    
 
 async function POST( request :  NextRequest) {
 
-    const data: AdminData = await request.json();
-
+    const data: MotoristaData = await request.json();
+    
     try {
-        const response = await service.crate(data)
+        const response = await service.create(data)
         const body = response.response;
         return NextResponse.json({body})
     } catch (error) {
+        console.log(error);
+        
         if( isAxiosError(error) && error.response?.status ){
             return NextResponse.json(error.response?.data,{
                 status : error.response?.status
@@ -28,6 +30,7 @@ async function POST( request :  NextRequest) {
 
 
 async function GET() {
+    
     try {        
         const response = await service.get()
         const body = response.response
@@ -48,7 +51,7 @@ async function GET() {
 
 async function PUT( request :  NextRequest) {
 
-    const data: AdminData = await request.json();
+    const data: MotoristaData = await request.json();
     
     try {
         const response = await service.update(data)
@@ -93,4 +96,4 @@ async function DELETE( request :  NextRequest) {
         })
     }
 }
-export {GET , POST , DELETE , PUT}
+export {GET , POST , PUT , DELETE}

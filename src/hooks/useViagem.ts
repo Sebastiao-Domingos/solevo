@@ -1,14 +1,13 @@
-import { AdminController } from "@/controllers/users/AdminController";
-import axios from "axios";
+import { ViagemController } from "@/controllers/viagem/ViagemController";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 
 
-const controller = new AdminController();
+const controller = new ViagemController();
 
-function useGetAdmin(){
+function useGetViagens(){
 
     const {data , ...result} = useQuery({
-        queryKey : ["administrador"],
+        queryKey : ["viagens"],
         queryFn : controller.listar
     })
 
@@ -18,34 +17,34 @@ function useGetAdmin(){
 
 }
 
-function useActionAdmin(){
+function useActionViagem(){
     const query = useQueryClient();
     
     const mutationUpdate = useMutation({
         mutationFn: controller.atualizar,
-        mutationKey :["administrador"],
+        mutationKey :["viagens"],
         onSuccess(){
-            query.invalidateQueries({queryKey:["administrador"]})
+            query.invalidateQueries({queryKey:["viagens"]})
         }
     })
     const mutationCreate = useMutation({
         mutationFn: controller.adicionar,
-        mutationKey :["administrador"],
+        mutationKey :["viagens"],
         onSuccess(){
-            query.invalidateQueries({queryKey:["administrador"]})
+            query.invalidateQueries({queryKey:["viagens"]})
+        }
+    })
+    const mutationDelete = useMutation({
+        mutationFn: controller.eliminar,
+        mutationKey :["viagens"],
+        onSuccess(){
+            query.invalidateQueries({queryKey:["viagens"]})
         }
     })
 
-    const mutationDelete = useMutation({
-        mutationFn: controller.eliminar,
-        mutationKey :["administrador"],
-        onSuccess(){
-            query.invalidateQueries({queryKey:["administrador"]})
-        }
-    })
 
     return {mutationCreate , mutationUpdate , mutationDelete}
 }
 
 
-export {useGetAdmin , useActionAdmin}
+export {useGetViagens, useActionViagem }

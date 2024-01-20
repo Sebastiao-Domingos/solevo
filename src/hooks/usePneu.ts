@@ -1,14 +1,14 @@
-import { AdminController } from "@/controllers/users/AdminController";
-import axios from "axios";
+import { CaminhaoController } from "@/controllers/caminhao/CaminhaoController";
+import { PneuController } from "@/controllers/pneu/PneuController";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 
 
-const controller = new AdminController();
+const controller = new PneuController();
 
-function useGetAdmin(){
+function useGetPneus(){
 
     const {data , ...result} = useQuery({
-        queryKey : ["administrador"],
+        queryKey : ["pneus"],
         queryFn : controller.listar
     })
 
@@ -18,34 +18,34 @@ function useGetAdmin(){
 
 }
 
-function useActionAdmin(){
+function useActionPneu(){
     const query = useQueryClient();
     
     const mutationUpdate = useMutation({
         mutationFn: controller.atualizar,
-        mutationKey :["administrador"],
+        mutationKey :["pneus"],
         onSuccess(){
-            query.invalidateQueries({queryKey:["administrador"]})
+            query.invalidateQueries({queryKey:["pneus"]})
         }
     })
     const mutationCreate = useMutation({
         mutationFn: controller.adicionar,
-        mutationKey :["administrador"],
+        mutationKey :["pneus"],
         onSuccess(){
-            query.invalidateQueries({queryKey:["administrador"]})
+            query.invalidateQueries({queryKey:["pneus"]})
+        }
+    })
+    const mutationDelete = useMutation({
+        mutationFn: controller.eliminar,
+        mutationKey :["pneus"],
+        onSuccess(){
+            query.invalidateQueries({queryKey:["pneus"]})
         }
     })
 
-    const mutationDelete = useMutation({
-        mutationFn: controller.eliminar,
-        mutationKey :["administrador"],
-        onSuccess(){
-            query.invalidateQueries({queryKey:["administrador"]})
-        }
-    })
 
     return {mutationCreate , mutationUpdate , mutationDelete}
 }
 
 
-export {useGetAdmin , useActionAdmin}
+export {useGetPneus, useActionPneu }

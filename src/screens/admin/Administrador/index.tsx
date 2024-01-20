@@ -1,13 +1,38 @@
 "use client"
 import Header from "@/components/Headers/Header";
-import { useGetAdmin } from "@/hooks/useAdmin";
+import { useActionAdmin, useGetAdmin } from "@/hooks/useAdmin";
 import { Register } from "./Register";
 import { Edit } from "./Edit";
+import { DeleteModal } from "@/components/Modals/DeleteModal";
+import { StatesType } from "@/components/State/StateComponent";
+import { useState } from "react";
 
 
 function Administradores() {
     const {data , result} = useGetAdmin();
     
+    const {mutationDelete} = useActionAdmin()
+    const [states , setStates ] =useState<StatesType>({
+        isLoading : false, isSuccess : false , isError : false
+    })
+    
+    const handleData = ( id : number)=>{
+        
+        setStates({...states , isLoading:true});
+        mutationDelete.mutate( id, {
+            onSuccess(){
+                setStates({...states , isLoading : false , isSuccess : true})
+            },
+            onError(){
+                setStates({...states , isError : true , isLoading : false})
+            },
+            onSettled(){
+                setTimeout(() => {
+                    setStates({...states , isError : false , isLoading : false , isSuccess : false})
+                }, 4000);
+            }
+        })
+    }
     return (  
         <div>
             <Header 
@@ -33,7 +58,10 @@ function Administradores() {
                                 </span>
                                 <span className="space-x-8">
                                     <Edit admin={admin} />
-                                    <button><i className="ri-delete-bin-line text-red-500"></i></button>
+                                    <DeleteModal 
+                                        handleDelete={() => handleData(admin.id!)}
+                                        status={states}                                    
+                                    />
                                 </span>
                             </li>
                         ))}

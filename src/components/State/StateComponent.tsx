@@ -6,7 +6,7 @@ export type StatesType ={
 
 function StateMutation({states} : {states : StatesType}){
     return (
-        <div className='relative'>
+        <div className={`relative`}>
             {states.isLoading && (
                 <div className='absolute bottom-3 right-0 animate-spin  border-4 border-x-orange-500 w-[30px] h-[30px] rounded-full '></div>
             )}

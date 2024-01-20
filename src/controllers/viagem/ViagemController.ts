@@ -1,21 +1,18 @@
 import { CaminhaoData } from "@/services/caminhao/CaminhaoService";
-import { AdminData } from "@/services/users/AdminService"
-import axios from "axios";
+import { ViagemData } from "@/services/viagem/ViagemService";
 
 
-class CaminhaoController {
-    private static readonly url = "/api/caminhao"
+class ViagemController {
+    private static readonly url = "/api/viagem"
 
     /**
      * adicionar
      */
-    public async adicionar( caminhao : CaminhaoData) {
+    public async adicionar( viagem : ViagemData) {
         
-        caminhao.km_rodado = Number(caminhao.km_rodado)
-        
-        const data = await fetch( CaminhaoController.url , {
+        const data = await fetch( ViagemController.url , {
             method : "POST",
-            body : JSON.stringify(caminhao),
+            body : JSON.stringify(viagem),
         }).then(res => res)
 
         const json = data.json();
@@ -27,20 +24,20 @@ class CaminhaoController {
         return json;
     }
 
-      /**
+     /**
      * atualizar
      */
-      public async atualizar( caminhao : CaminhaoData) {
+     public async atualizar( viagem : ViagemData) {
         
-        const data = await fetch(CaminhaoController.url , {
+        const data = await fetch(ViagemController.url , {
             method : "PUT",
-            body : JSON.stringify(caminhao),
+            body : JSON.stringify(viagem),
         }).then(res => res)
 
         const json = data.json();
 
         if(!data.ok){
-            throw new Error("Erro ao cadastrar")
+            throw new Error("Erro ao atualizar")
         }
 
         return json;
@@ -51,7 +48,7 @@ class CaminhaoController {
      */
     public async eliminar(id : number) {
 
-        const data = await fetch( `${CaminhaoController.url}` , {
+        const data = await fetch( `${ViagemController.url}` , {
             method : "DELETE",
             body : JSON.stringify({id : id })
         }).then(res => res)
@@ -64,18 +61,19 @@ class CaminhaoController {
 
         return json;
     }
+
     /**
      * obter
      */
     public async listar() {
         
-        const response = await fetch(CaminhaoController.url).then(res => res.json())
+        const response = await fetch(ViagemController.url).then(res => res.json())
         
-        const json:CaminhaoData[] = await response
+        const json:ViagemData[] = await response
     
         return json
     }
 }
 
 
-export {CaminhaoController}
+export {ViagemController}

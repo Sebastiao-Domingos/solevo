@@ -20,10 +20,9 @@ class CaminhaoService {
      * crate
      */
     public async create( caminhao : CaminhaoData) {
-        console.log("Service : ",caminhao);
         
         const response = await api
-        .post<{},{data:CaminhaoData}>(CaminhaoService.BASE_URL, caminhao)
+        .post<{},{data:CaminhaoData}>(CaminhaoService.BASE_URL, caminhao )
         .then( res => res.data);
         
         return {
@@ -56,6 +55,34 @@ class CaminhaoService {
             response
         }
     }
+
+        /**
+     * update
+     */
+        public async update(data :CaminhaoData) {
+            data.km_rodado = Number(data.km_rodado)
+            const response  = await api.put<{},{data  : CaminhaoData }>(`${CaminhaoService.BASE_URL}/${data.id}`, data)
+            .then( res => res.data);
+    
+            return {
+                status : 200,
+                response
+            }
+        }
+    
+        /**
+         * delete
+         */
+        public async delete(id : number) {
+            console.log("Eliminar : " , id);
+            
+            const response = await api.delete<{},{data : CaminhaoData}>(`${CaminhaoService.BASE_URL}/${id}`)
+            .then( res => res.data);
+    
+            return {
+                status : 200, response
+            }
+        }
 }
 
 
