@@ -1,23 +1,30 @@
 import { MotoristaController } from "@/controllers/motorista/MotoristaController";
-import { ViagemController } from "@/controllers/viagem/ViagemController";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 
 
 const controller = new MotoristaController();
 
-function useGetMotoristas(){
-
+function useGetMotoristas( ){
     const {data , ...result} = useQuery({
         queryKey : ["motoristas"],
         queryFn : controller.listar
     })
-
+    
     return {
         result , data
     }
-
 }
 
+function useGetDadosMotorista( id : number ){
+    const {data , ...result} = useQuery({
+        queryKey : ["motoristas"],
+        queryFn : ()=>controller.obterData(id),
+    })
+    return {
+        result , data
+    }
+    
+}
 function useActionMotorista(){
     const query = useQueryClient();
     
@@ -48,4 +55,4 @@ function useActionMotorista(){
 }
 
 
-export {useGetMotoristas, useActionMotorista }
+export {useGetMotoristas, useActionMotorista , useGetDadosMotorista }

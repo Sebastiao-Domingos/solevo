@@ -1,4 +1,4 @@
-import { MotoristaData } from "@/services/motorista/MotoristaService";
+import { MotoristaData, MotoristaResponse } from "@/services/motorista/MotoristaService";
 import axios from "axios";
 
 
@@ -72,6 +72,23 @@ class MotoristaController {
         const json:MotoristaData[] = await response
     
         return json
+    }
+
+     /**
+     * obter
+     */
+     public async obterData(
+        id : number
+    ): Promise<MotoristaResponse> {
+        
+        const response = await fetch(`${MotoristaController.url}/?id=${id}`);
+        const data = await response.json();
+
+        if(!response.ok){
+            throw new Error(data.error);
+        }
+
+        return data;
     }
 }
 

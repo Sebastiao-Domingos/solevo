@@ -24,13 +24,13 @@ const links = [
             {
                 title : "Pneus",
                 link : "/dashboard/pneus",
-                icon : "",
+                icon : "ri-car-line",
                 subMenus : [],
             },
             {
                 title : "Motoristas",
                 link : "/dashboard/motoristas",
-                icon : "ri-root-line",
+                icon : "ri-user-line",
                 subMenus : [
                     {
                         title : "Localização",
@@ -41,13 +41,13 @@ const links = [
             {
                 title : "Viagens",
                 link : "/dashboard/viagens",
-                icon : "",
+                icon : "ri-car-line",
                 subMenus : [],
             },
             {
                 title : "Definições",
                 link : "#",
-                icon : "ri-setting-line",
+                icon : "ri-settings-4-line",
                 subMenus : [{
                     title : "Administradores",
                     link : "/dashboard/administradores"
@@ -109,7 +109,7 @@ function Menu(){
             { links.map( ( link , index ) => (
             <div key={index} className="w-full">
                 <h3 className="mb-4 ">{link.group}</h3>    
-                <div className="w-full flex flex-col gap-1 text-xl">
+                <div className="w-full flex flex-col gap-1 text-[18px]">
                     <Accordion.Root 
                        type="single"
                        defaultValue="item-1"

@@ -6,9 +6,9 @@ import { Register } from "./Register";
 import Table, { TBody, THead } from "@/components/Table/Table";
 import { useActionMotorista, useGetMotoristas } from "@/hooks/useMotorista";
 import { DeleteModal } from "@/components/Modals/DeleteModal";
-import { useForm } from "react-hook-form";
 import { useState } from "react";
 import { StatesType } from "@/components/State/StateComponent";
+import Link from "next/link";
 
 function Motoristas() {
 
@@ -58,8 +58,12 @@ function Motoristas() {
                     <TBody>
                     { data?.map( motorista => (
                         <tr key={motorista.id} className="border-b border-slate-300/10 last:border-none hover:bg-amber-600/10">
-                            <td className="py-4 pl-2">{motorista.nome}</td>
-                            <td className="py-4">{motorista.numero_carta_conducao}</td>
+                            <td className="py-4 pl-2">
+                                <Link href={`/dashboard/motoristas/${motorista.id}`} >{motorista.nome}</Link>
+                            </td>
+                            <td className="py-4">
+                                <Link href={`/dashboard/motoristas/${motorista.id}`} >{motorista.numero_carta_conducao}</Link>
+                            </td>
                             <td className="py-4">{motorista.telefone}</td>
                             <td className="py-4"></td>
                             <td className="space-x-8">

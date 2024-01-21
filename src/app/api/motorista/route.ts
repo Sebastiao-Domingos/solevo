@@ -29,25 +29,65 @@ async function POST( request :  NextRequest) {
 }
 
 
-async function GET() {
-    
-    try {        
-        const response = await service.get()
-        const body = response.response
-        
-        return NextResponse.json(body)
-    } catch (error) {
-        if(isAxiosError(error) && error.response?.status){
-            return NextResponse.json(error.response.data , {
-                status : error.response.status
+async function GET( request : NextRequest | null) {
+    const id  = await request?.nextUrl.searchParams.get("id");
+    if(id){
+        try {  
+            const response = await service.getById(Number(id))
+            const body = response.response
+            
+            return NextResponse.json(body)
+        } catch (error) {
+            if(isAxiosError(error) && error.response?.status){
+                return NextResponse.json(error.response.data , {
+                    status : error.response.status
+                })
+            }
+            return NextResponse.json({
+                status : 500,
+                error : "Erro desconhecido"
             })
-        }
-        return NextResponse.json({
-            status : 500,
-            error : "Erro desconhecido"
-        })
-    }   
+        }  
+    }else {
+        try {        
+            const response = await service.get()
+            const body = response.response
+            
+            return NextResponse.json(body)
+        } catch (error) {
+            if(isAxiosError(error) && error.response?.status){
+                return NextResponse.json(error.response.data , {
+                    status : error.response.status
+                })
+            }
+            return NextResponse.json({
+                status : 500,
+                error : "Erro desconhecido"
+            })
+        }   
+    }
 }
+
+// async function GET( request : NextRequest ) {
+    
+//     try {        
+//         const response = await service.get()
+//         const body = response.response
+        
+//         return NextResponse.json(body)
+//     } catch (error) {
+//         if(isAxiosError(error) && error.response?.status){
+//             return NextResponse.json(error.response.data , {
+//                 status : error.response.status
+//             })
+//         }
+//         return NextResponse.json({
+//             status : 500,
+//             error : "Erro desconhecido"
+//         })
+//     }   
+// }
+ 
 
 async function PUT( request :  NextRequest) {
 

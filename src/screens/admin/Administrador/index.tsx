@@ -69,7 +69,7 @@ function Administradores() {
                 }
                 { result.isLoading &&
                     <div className="w-full justify-center">
-                        <p className="text-slate-400 italic">Carregando...</p>
+                        <p className="text-slate-400 italic text-center">Carregando...</p>
                     </div>
                 }
            </div>
