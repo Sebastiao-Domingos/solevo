@@ -1,5 +1,7 @@
 import { api } from "@/infra/api"
 import axios from "axios"
+import { PneuData } from "../pneu/PneuService"
+import { ViagemData } from "../viagem/ViagemService"
 
 
 export type CaminhaoData ={
@@ -11,7 +13,8 @@ export type CaminhaoData ={
 }
 
 export type CaminhaoDataResponse = CaminhaoData & {
-    pneus : []
+    pneu : PneuData[],
+    viagem : ViagemData[]
 }
 
 class CaminhaoService {

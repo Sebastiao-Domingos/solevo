@@ -16,6 +16,18 @@ function useGetCaminhoes(){
     }
 
 }
+function useGetCaminhaoById(id : number){
+
+    const {data , ...result} = useQuery({
+        queryKey : ["caminhoes"],
+        queryFn : () => controller.obterById(id)
+    })
+
+    return {
+        result , data
+    }
+
+}
 
 // function useActionCaminhao(){
 //     const query = useQueryClient();
@@ -69,4 +81,4 @@ function useActionCaminhao(){
 }
 
 
-export {useGetCaminhoes, useActionCaminhao }
+export {useGetCaminhoes, useActionCaminhao, useGetCaminhaoById }

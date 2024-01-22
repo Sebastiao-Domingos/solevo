@@ -1,4 +1,4 @@
-import { CaminhaoData } from "@/services/caminhao/CaminhaoService";
+import { CaminhaoData, CaminhaoDataResponse } from "@/services/caminhao/CaminhaoService";
 import { AdminData } from "@/services/users/AdminService"
 import axios from "axios";
 
@@ -67,11 +67,29 @@ class CaminhaoController {
     /**
      * obter
      */
-    public async listar() {
+    public async listar() : Promise<CaminhaoData[]>{
         
-        const response = await fetch(CaminhaoController.url).then(res => res.json())
+        const response = await fetch(CaminhaoController.url).then(res => res)
         
-        const json:CaminhaoData[] = await response
+        const json = await response.json()
+        
+        if(!response.ok){
+            throw new Error("Erro ao pegar dados");
+        }
+        return json
+    }
+    /**
+     * obter by id
+     */
+    public async obterById(id : number) : Promise<CaminhaoDataResponse> {
+        
+        const response = await fetch(`${CaminhaoController.url}?id=${id}`).then(res => res)
+        
+        const json = await response.json();
+
+        if(!response.ok){
+            throw new Error("Erro ao pegar dado do caminhao");
+        }
     
         return json
     }

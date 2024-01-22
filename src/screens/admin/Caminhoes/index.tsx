@@ -8,6 +8,7 @@ import { Register } from "./Register";
 import Table, { TBody, THead } from "@/components/Table/Table";
 import { StatesType } from "@/components/State/StateComponent";
 import { DeleteModal } from "@/components/Modals/DeleteModal";
+import Link from "next/link";
 
 function Caminhoes() {
 
@@ -45,7 +46,7 @@ function Caminhoes() {
         </Header>
        
         <div className="mt-6">
-            { result.isSuccess && (
+            { result.isSuccess && data && (
                 <Table>
                     <THead>
                         <td className="py-5 pl-2">Nome</td>
@@ -55,11 +56,17 @@ function Caminhoes() {
                         <td className="py-4"></td>
                     </THead>
                     <TBody>
-                    { data?.map( caminhao => (
+                    {data &&  data?.map( caminhao => (
                         <tr key={caminhao.id} className="border-b border-slate-300/10 last:border-none hover:bg-amber-600/10">
-                            <td className="py-4 pl-2">{caminhao.nome}</td>
-                            <td className="py-4">{caminhao.marca}</td>
-                            <td className="py-4">{caminhao.km_rodado}</td>
+                            <td className="py-4 pl-2">
+                                <Link  href={`/dashboard/caminhoes/${caminhao.id}`}>{caminhao.nome}</Link>
+                            </td>
+                            <td className="py-4">
+                                <Link  href={`/dashboard/caminhoes/${caminhao.id}`}>{caminhao.marca}</Link>
+                            </td>
+                            <td className="py-4">
+                                <Link  href={`/dashboard/caminhoes/${caminhao.id}`}>{caminhao.km_rodado}</Link>
+                            </td>
                             <td className="py-4">{caminhao.ano_fabricacao}</td>
                             <td className="space-x-8">
                                 <Edit caminhao={caminhao} />
