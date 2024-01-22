@@ -10,7 +10,7 @@ interface RegisterProps extends HTMLAttributes<HTMLFormElement> {
 
 export const RegisterModal =  ({btnIcon, btnText,title, children}:RegisterProps) => (
   <AlertDialog.Root>
-  <AlertDialog.Trigger className='py-2 px-4 rounded shadow bg-amber-600 text-white space-x-4 hover:bg-amber-600/75 active:bg-amber-600/50'> <i className={btnIcon}></i> {btnText}</AlertDialog.Trigger>
+  <AlertDialog.Trigger className='py-2 px-4 rounded shadow bg-amber-400 /text-white space-x-4 hover:bg-amber-600/75 active:bg-amber-600/50'> <i className={btnIcon}></i> {btnText}</AlertDialog.Trigger>
     <AlertDialog.Portal>
       <AlertDialog.Overlay className='fixed inset-0 bg-black/40' />
       <AlertDialog.Content className='fixed top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] w-[500px] min-h-[400px] max-h-[80vh] rounded shadow bg-white p-6'>

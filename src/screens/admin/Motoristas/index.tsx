@@ -39,7 +39,7 @@ function Motoristas() {
     return ( <div>
         
         <Header 
-            icon="ri-driver-line"
+            icon="ri-user-line"
             title="Motoristas"
         >
             <Register />

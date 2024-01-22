@@ -10,7 +10,7 @@ const links = [
         group : "Markiting",
         menus : [
             {
-                title : "Home",
+                title : "Dashboard",
                 link : "/dashboard",
                 icon : "ri-home-2-line",
                 subMenus : [],
@@ -43,7 +43,12 @@ const links = [
                 link : "/dashboard/viagens",
                 icon : "ri-car-line",
                 subMenus : [],
-            },
+            }
+        ]
+    },
+    {
+        group : "Serviços",
+        menus : [
             {
                 title : "Definições",
                 link : "#",
@@ -68,12 +73,12 @@ export default function Layout({children} : {children : React.ReactNode}){
             <div className="w-full">
                 <div className="fixed top-0 left-0 w-[300px] h-full bg-white/60 p-4 shadow">
                     <div className="flex justify-between">
-                        <h2 className="text-amber-600 font-bold text-2xl">Transportadora</h2>
-                        <button className="p-2 rounded shadow text-xl"><i className="ri-arrow-left-s-line"></i></button>
+                        <h2 className="text-amber-500 font-bold text-2xl uppercase">Transportadora</h2>
+                        {/* <button className="p-2 rounded shadow text-xl"><i className="ri-arrow-left-s-line"></i></button> */}
                     </div>
                     <Menu></Menu>
                     <div className="absolute bottom-4 left-4">
-                        <p className="space-x-3 border-b pb-2 text-amber-600"> 
+                        <p className="space-x-3 border-b pb-2 text-amber-500"> 
                             <i className="ri-user-line"></i>
                             <span>sebastiao@gmail.com</span>
                         </p>
@@ -87,7 +92,7 @@ export default function Layout({children} : {children : React.ReactNode}){
                         
                         <div className="flex gap-8">
                             <button>Notificação</button>
-                            <button className="flex items-center gap-2 p-2 rounded-full bg-amber-600 text-white"><i className="ri-logout-circle-line"></i> Logout</button>
+                            <button className="flex items-center gap-2 p-2 rounded-full bg-amber-500 text-white"><i className="ri-logout-circle-line"></i> Logout</button>
                         </div>
                     </div>
                     <div className="p-6">
@@ -105,10 +110,10 @@ function Menu(){
 
     const [active , setActive] = useState(false);
     return (
-        <nav>
+        <nav className="mt-6">
             { links.map( ( link , index ) => (
             <div key={index} className="w-full">
-                <h3 className="mb-4 ">{link.group}</h3>    
+                <h3 className="mb-4 text-slate-400 font-bold">{link.group}</h3>    
                 <div className="w-full flex flex-col gap-1 text-[18px]">
                     <Accordion.Root 
                        type="single"

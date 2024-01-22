@@ -33,7 +33,7 @@ function Pneus() {
     }
     return ( <div>
         <Header 
-            icon="ri-driver-line"
+            icon="ri-car-line"
             title="Pneus"
         >
             <Register />
