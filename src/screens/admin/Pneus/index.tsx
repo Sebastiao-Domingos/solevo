@@ -44,7 +44,7 @@ function Pneus() {
                 <Table>
                     <THead>
                         <td className="py-5 pl-2">Marca</td>
-                        <td className="py-4">Marca</td>
+                        <td className="py-4">Duração</td>
                         <td className="py-4"></td>
                         <td className="py-4"></td>
                         <td className="py-4"></td>
