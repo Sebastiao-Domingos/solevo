@@ -7,7 +7,7 @@ const controller = new MotoristaController();
 function useGetMotoristas( ){
     const {data , ...result} = useQuery({
         queryKey : ["motoristas"],
-        queryFn : controller.listar
+        queryFn : controller.listar,
     })
     
     return {

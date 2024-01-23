@@ -6,9 +6,9 @@ function Screen() {
         <div className="relative w-full h-[100vh] flex justify-center items-center">
             <header className="absolute top-0 left-0 right-0 w-full">
             <nav className="p-6 flex justify-between">
-                <span className="text-2xl italic text-amber-800 font-bold">Logo</span>
+                <span className="text-2xl italic text-amber-500 font-bold">Logo</span>
                 <ul>
-                    <li><Link href="/login" className="flex items-center gap-3 px-4 py-3 border border-amber-800 text-amber-800 rounded hover:bg-amber-800 hover:text-white" >
+                    <li><Link href="/login" className="flex items-center gap-3 px-4 py-3 border border-amber-500 text-amber-500 rounded hover:bg-amber-500 hover:text-white" >
                        <i className="ri-login-circle-line"></i>Log in
                     </Link></li>
                 </ul>
@@ -16,7 +16,7 @@ function Screen() {
             </header>
             <div className="w-[65%] h-[400px] flex justify-center items-center">
             <div className="text-center space-y-6">
-               <h1 className="text-4xl uppercase text-amber-800 font-bold">
+               <h1 className="text-4xl uppercase text-amber-500 font-bold">
                 Sistema de getão e controlo de transpotadora
                </h1>
                <p className="">

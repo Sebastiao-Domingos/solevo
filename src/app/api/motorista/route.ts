@@ -29,9 +29,11 @@ async function POST( request :  NextRequest) {
 }
 
 
-async function GET( request : NextRequest | null) {
-    const id  = await request?.nextUrl.searchParams.get("id");
-    if(id){
+async function GET( request : NextRequest) {
+    const id  = request?.nextUrl.searchParams.get("id");
+    console.log("Service : ", id);
+    
+    if(id &&  id !==  null ){
         try {  
             const response = await service.getById(Number(id))
             const body = response.response

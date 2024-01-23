@@ -18,6 +18,9 @@ function Motoristas() {
     const [states , setStates ] =useState<StatesType>({
         isLoading : false, isSuccess : false , isError : false
     })
+
+    console.log(data,"AQUI");
+    
     
     const handleData = ( id : number)=>{
         
@@ -56,7 +59,7 @@ function Motoristas() {
                         <td className="py-4"></td>
                     </THead>
                     <TBody>
-                    { data?.map( motorista => (
+                    {Array.isArray(data) && data?.map( motorista => (
                         <tr key={motorista.id} className="border-b border-slate-300/10 last:border-none hover:bg-amber-600/10">
                             <td className="py-4 pl-2">
                                 <Link href={`/dashboard/motoristas/${motorista.id}`} >{motorista.nome}</Link>

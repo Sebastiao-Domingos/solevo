@@ -54,7 +54,7 @@ function Viagens() {
                         <td className="py-4" colSpan={2}>Kilometragem</td>
                     </THead>
                     <TBody>
-                    { data?.map( viagem => (
+                    { Array.isArray(data) && data?.map( viagem => (
                         <tr key={viagem.id} className="border-b border-slate-300/10 last:border-none hover:bg-amber-600/10">
                             <td className="py-4 pl-2">{viagem.origem}</td>
                             <td className="py-4">{viagem.destino}</td>

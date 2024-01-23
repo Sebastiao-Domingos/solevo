@@ -56,7 +56,7 @@ function Caminhoes() {
                         <td className="py-4"></td>
                     </THead>
                     <TBody>
-                    {data &&  data?.map( caminhao => (
+                    {Array.isArray(data) &&  data?.map( caminhao => (
                         <tr key={caminhao.id} className="border-b border-slate-300/10 last:border-none hover:bg-amber-600/10">
                             <td className="py-4 pl-2">
                                 <Link  href={`/dashboard/caminhoes/${caminhao.id}`}>{caminhao.nome}</Link>
